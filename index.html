@@ -29,24 +29,13 @@
 </head>
 <body class="text-gray-800 antialiased h-screen flex flex-col">
 
-    <!-- Header with Copy Button -->
-    <header class="bg-white shadow-sm sticky top-0 z-10 p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-teal-700 hidden sm:block">Mindful Workspace</h1>
-        <div class="flex-1 flex justify-end">
-            <button onclick="toggleHTMLModal()" class="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center shadow-md">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                Xem & Copy HTML
-            </button>
-        </div>
-    </header>
-
     <!-- Main Content Area -->
     <main class="flex-1 overflow-y-auto p-4 sm:p-8 flex justify-center">
         <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col h-full max-h-[800px]">
             
             <!-- Quiz Header -->
             <div class="bg-teal-50 p-6 sm:p-8 border-b border-teal-100">
-                <h2 class="text-2xl sm:text-3xl font-bold text-teal-800 mb-2">Bài tập: Kỹ Năng Điều Hòa Cảm Xúc</h2>
+                <h2 class="text-2xl sm:text-3xl font-bold text-teal-800 mb-2">Bài tập: Kỹ Năng Làm Chủ Cảm Xúc</h2>
                 <p class="text-teal-600">Thực hành thấu hiểu nội tâm với kỹ năng STOP và SBNRR.</p>
             </div>
 
@@ -70,6 +59,16 @@
                     <div id="options-container" class="space-y-3">
                         <!-- Options will be injected here -->
                     </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between items-center mt-8">
+                        <button id="prev-button" onclick="prevQuestion()" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Câu trước
+                        </button>
+                        <button id="next-button-nav" onclick="nextQuestion()" class="px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-medium rounded-lg transition-colors focus:ring-4 focus:ring-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Câu tiếp
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Feedback Section (Hidden initially) -->
@@ -80,9 +79,6 @@
                     <p id="feedback-rationale" class="text-gray-700 leading-relaxed mb-4">
                         <!-- Rationale text will be injected here -->
                     </p>
-                    <button id="next-button" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-medium rounded-lg transition-colors focus:ring-4 focus:ring-gray-200">
-                        Tiếp theo
-                    </button>
                 </div>
                 
                 <!-- Final Result Section (Hidden initially) -->
@@ -99,32 +95,6 @@
             </div>
         </div>
     </main>
-
-    <!-- HTML Source Modal -->
-    <div id="html-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden transform transition-all">
-            <div class="flex justify-between items-center p-4 border-b bg-gray-50">
-                <h3 class="text-lg font-bold text-gray-800">Mã nguồn HTML</h3>
-                <div class="flex space-x-2">
-                    <button onclick="copyHTMLToClipboard()" id="copy-btn" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                        <span>Sao chép Code</span>
-                    </button>
-                    <button onclick="toggleHTMLModal()" class="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="flex-1 p-0 overflow-hidden bg-gray-900 relative">
-                <!-- Notification Toast for Copy -->
-                <div id="copy-toast" class="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg transform transition-all duration-300 translate-y-[-150%] opacity-0 z-10 flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    Đã sao chép vào Clipboard!
-                </div>
-                <textarea id="html-code-area" readonly class="w-full h-full p-4 font-mono text-sm text-gray-300 bg-gray-900 border-none focus:ring-0 resize-none overflow-y-auto whitespace-pre"></textarea>
-            </div>
-        </div>
-    </div>
 
     <!-- Application Logic -->
     <script>
@@ -196,6 +166,7 @@
 
         let currentQuestionIndex = 0;
         let isAnswered = false;
+        let userAnswers = new Array(quizData.length).fill(null); 
 
         const questionTextEl = document.getElementById('question-text');
         const optionsContainerEl = document.getElementById('options-container');
@@ -203,25 +174,29 @@
         const feedbackTitleEl = document.getElementById('feedback-title');
         const feedbackRationaleEl = document.getElementById('feedback-rationale');
         const questionCounterEl = document.getElementById('question-counter');
-        const progressBarEl = document.getElementById('progressBar'); // Fixed ID
+        const progressBarEl = document.getElementById('progress-bar'); 
         const questionSectionEl = document.getElementById('question-section');
         const resultSectionEl = document.getElementById('result-section');
+        const prevButtonEl = document.getElementById('prev-button');
+        const nextButtonNavEl = document.getElementById('next-button-nav');
 
         function initQuiz() {
             currentQuestionIndex = 0;
+            userAnswers.fill(null);
             questionSectionEl.classList.remove('hidden');
             resultSectionEl.classList.add('hidden');
             loadQuestion();
         }
 
         function loadQuestion() {
-            isAnswered = false;
+            // Check if current question was already answered
+            isAnswered = userAnswers[currentQuestionIndex] !== null;
             const currentQ = quizData[currentQuestionIndex];
             
             // Update Progress
             questionCounterEl.textContent = `Câu ${currentQuestionIndex + 1} / ${quizData.length}`;
             const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            progressBarEl.style.width = `${progressPercentage}%`;
 
             // Set Question Text
             questionTextEl.textContent = currentQ.question;
@@ -246,6 +221,25 @@
                 button.onclick = () => selectOption(index, button, option);
                 optionsContainerEl.appendChild(button);
             });
+
+            // Update navigation buttons state
+            prevButtonEl.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextButtonNavEl.textContent = 'Hoàn thành';
+            } else {
+                nextButtonNavEl.textContent = 'Câu tiếp';
+            }
+
+            // Restore previous answer state if it exists
+            if (isAnswered) {
+                const previousAnswerIndex = userAnswers[currentQuestionIndex];
+                const optionData = currentQ.options[previousAnswerIndex];
+                
+                // Temporarily unset isAnswered so selectOption can style the buttons
+                isAnswered = false; 
+                selectOption(previousAnswerIndex, optionsContainerEl.children[previousAnswerIndex], optionData);
+            }
             
             // Small animation
             questionSectionEl.style.opacity = 0;
@@ -253,8 +247,9 @@
         }
 
         function selectOption(selectedIndex, buttonEl, optionData) {
-            if (isAnswered) return; // Prevent multiple selections
+            if (isAnswered) return; // Prevent multiple selections for new answers
             isAnswered = true;
+            userAnswers[currentQuestionIndex] = selectedIndex;
 
             const buttons = optionsContainerEl.querySelectorAll('button');
             
@@ -303,18 +298,19 @@
             
             feedbackRationaleEl.textContent = optionData.rationale;
             
-            // Update button text on last question
-            const nextBtn = document.getElementById('next-button');
-            if (currentQuestionIndex === quizData.length - 1) {
-                nextBtn.textContent = 'Hoàn thành';
-            } else {
-                nextBtn.textContent = 'Tiếp theo';
+            // Scroll to feedback (only if newly answered)
+            if (userAnswers[currentQuestionIndex] === selectedIndex) {
+                 setTimeout(() => {
+                    feedbackSectionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
             }
-            
-            // Scroll to feedback
-            setTimeout(() => {
-                feedbackSectionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
         }
 
         function nextQuestion() {
@@ -329,81 +325,11 @@
         function showResult() {
             questionSectionEl.classList.add('hidden');
             resultSectionEl.classList.remove('hidden');
-            document.getElementById('progress-bar').style.width = `100%`;
+            progressBarEl.style.width = `100%`;
         }
 
         function restartQuiz() {
             initQuiz();
-        }
-
-        // --- Modal and Copy HTML Logic ---
-        
-        function toggleHTMLModal() {
-            const modal = document.getElementById('html-modal');
-            const textArea = document.getElementById('html-code-area');
-            
-            if (modal.classList.contains('hidden')) {
-                // Show modal
-                modal.classList.remove('hidden');
-                // Format and set the HTML content of the CURRENT file to the textarea
-                // We fetch the current document's outerHTML
-                let rawHTML = document.documentElement.outerHTML;
-                
-                // Optional: Basic formatting (replace some minified structures with newlines)
-                // In a real app, you might use a library like js-beautify here
-                
-                textArea.value = '<!DOCTYPE html>\n<html lang="vi">\n' + document.documentElement.innerHTML + '\n</html>';
-                
-                // Prevent body scroll
-                document.body.style.overflow = 'hidden';
-            } else {
-                // Hide modal
-                modal.classList.add('hidden');
-                // Restore body scroll
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        function copyHTMLToClipboard() {
-            const textArea = document.getElementById('html-code-area');
-            
-            // Select the text
-            textArea.select();
-            textArea.setSelectionRange(0, 99999); // For mobile devices
-            
-            try {
-                // Execute copy
-                document.execCommand('copy');
-                
-                // Show Toast Notification
-                const toast = document.getElementById('copy-toast');
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateY(0)';
-                
-                // Update Button Visuals
-                const btn = document.getElementById('copy-btn');
-                const originalContent = btn.innerHTML;
-                btn.classList.replace('bg-blue-600', 'bg-green-600');
-                btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-                btn.innerHTML = `<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Đã Copy!</span>`;
-                
-                // Hide Toast and reset button after 2.5 seconds
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(-150%)';
-                    
-                    btn.classList.replace('bg-green-600', 'bg-blue-600');
-                    btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
-                    btn.innerHTML = originalContent;
-                }, 2500);
-                
-            } catch (err) {
-                console.error('Không thể sao chép văn bản: ', err);
-                alert('Có lỗi xảy ra khi copy. Vui lòng chọn text thủ công.');
-            }
-            
-            // Deselect
-            window.getSelection().removeAllRanges();
         }
 
         // Add custom animation styles dynamically
