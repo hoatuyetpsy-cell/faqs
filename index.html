@@ -3,321 +3,425 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Cảm xúc Công sở</title>
+    <title>Trắc nghiệm: Kỹ Năng Điều Hòa Cảm Xúc Nơi Công Sở</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Thư viện tạo mã QR ổn định hơn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
-        .glass-card { background: rgba(255, 255, 255, 1); border-radius: 1.5rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        .answer-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); border: 2px solid #e2e8f0; }
-        .answer-btn:hover:not(:disabled) { border-color: #3b82f6; background-color: #eff6ff; transform: translateY(-1px); }
-        .answer-btn:active { transform: scale(0.98); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-slide { animation: slideUp 0.4s ease-out forwards; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Gray 100 */
+        }
+        /* Custom scrollbar for better appearance */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="text-gray-800 antialiased h-screen flex flex-col">
 
-    <div id="app" class="w-full max-w-md">
-        
-        <!-- Màn hình bắt đầu -->
-        <div id="start-screen" class="glass-card p-8 text-center animate-slide">
-            <div class="mb-6 flex justify-center">
-                <div class="p-5 bg-indigo-100 rounded-3xl text-indigo-600 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
-            </div>
-            <h1 class="text-2xl font-bold text-slate-800 mb-3">Làm Chủ Cảm Xúc</h1>
-            <p class="text-slate-500 mb-8 leading-relaxed">Bộ câu hỏi giúp bạn giữ "đầu lạnh" trong các tình huống oái oăm nơi công sở.</p>
-            
-            <button onclick="startQuiz()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200 transition-all mb-4">
-                Bắt đầu Trắc nghiệm
-            </button>
-            
-            <button onclick="showQRCode()" class="w-full py-3 text-slate-500 font-medium rounded-2xl border-2 border-slate-100 hover:bg-slate-50 flex items-center justify-center gap-2 transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm2 2V5h1v1H5zM3 13a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3zm2 2v-1h1v1H5zM13 3a1 1 0 00-1 1v3a1 1 0 001 1h3a1 1 0 001-1V4a1 1 0 00-1-1h-3zm1 2h1v1h-1V5z" clip-rule="evenodd" />
-                    <path d="M11 4a1 1 0 10-2 0v1a1 1 0 002 0V4zM10 7a1 1 0 011 1v1h2a1 1 0 110 2h-3a1 1 0 01-1-1V8a1 1 0 011-1zM16 9a1 1 0 100-2h-1a1 1 0 100 2h1zM9 13a1 1 0 011-1h1a1 1 0 110 2H10a1 1 0 01-1-1zM7 11a1 1 0 100-2H6a1 1 0 100 2h1zM11 15a1 1 0 100-2h-1a1 1 0 100 2h1zM16 13a1 1 0 11-2 0v-1a1 1 0 112 0v1zM13 17a1 1 0 100-2h-1a1 1 0 100 2h1zM7 17a1 1 0 100-2H6a1 1 0 100 2h1zM15 17a1 1 0 100-2h-1a1 1 0 100 2h1z" />
-                </svg>
-                Mã QR cho mọi người
+    <!-- Header with Copy Button -->
+    <header class="bg-white shadow-sm sticky top-0 z-10 p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-teal-700 hidden sm:block">Mindful Workspace</h1>
+        <div class="flex-1 flex justify-end">
+            <button onclick="toggleHTMLModal()" class="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center shadow-md">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                Xem & Copy HTML
             </button>
         </div>
+    </header>
 
-        <!-- Màn hình Câu hỏi -->
-        <div id="quiz-screen" class="hidden glass-card p-6 animate-slide">
-            <div class="flex justify-between items-center mb-6">
-                <span id="progress-text" class="text-xs font-bold text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full uppercase">Câu 1 / 10</span>
-                <div class="w-32 bg-slate-100 h-2 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="bg-indigo-500 h-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-            </div>
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-8 flex justify-center">
+        <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col h-full max-h-[800px]">
             
-            <h2 id="question-text" class="text-xl font-bold text-slate-800 mb-8 leading-tight">...</h2>
-            
-            <div id="options-container" class="space-y-3">
-                <!-- Đáp án chèn ở đây -->
+            <!-- Quiz Header -->
+            <div class="bg-teal-50 p-6 sm:p-8 border-b border-teal-100">
+                <h2 class="text-2xl sm:text-3xl font-bold text-teal-800 mb-2">Bài tập: Kỹ Năng Điều Hòa Cảm Xúc</h2>
+                <p class="text-teal-600">Thực hành thấu hiểu nội tâm với kỹ năng STOP và SBNRR.</p>
             </div>
 
-            <!-- Panel Phản hồi khi trả lời xong -->
-            <div id="feedback-panel" class="hidden mt-8 p-5 rounded-2xl border-l-8 transform transition-all">
-                <div class="flex items-start gap-3">
-                    <div id="feedback-icon" class="mt-1"></div>
-                    <div>
-                        <p id="feedback-message" class="font-bold text-lg mb-1"></p>
-                        <p id="feedback-hint" class="text-sm text-slate-600 leading-relaxed"></p>
+            <!-- Quiz Content Container -->
+            <div id="quiz-container" class="flex-1 overflow-y-auto p-6 sm:p-8 relative">
+                <!-- Question Section -->
+                <div id="question-section" class="transition-opacity duration-300">
+                    <div class="flex justify-between items-center mb-6">
+                        <span id="question-counter" class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Câu 1 / 7</span>
+                        <!-- Progress Bar -->
+                        <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="h-full bg-teal-500 transition-all duration-300" style="width: 14%;"></div>
+                        </div>
+                    </div>
+
+                    <h3 id="question-text" class="text-xl font-medium text-gray-800 mb-6 leading-relaxed">
+                        <!-- Question text will be injected here -->
+                    </h3>
+
+                    <!-- Options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Options will be injected here -->
                     </div>
                 </div>
-                <button onclick="nextQuestion()" class="mt-6 w-full py-3 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-900 shadow-lg">Tiếp tục</button>
+
+                <!-- Feedback Section (Hidden initially) -->
+                <div id="feedback-section" class="hidden mt-8 p-6 rounded-xl border-l-4 transition-all duration-300">
+                    <h4 id="feedback-title" class="text-lg font-bold mb-2 flex items-center">
+                        <!-- Feedback icon and title will be injected here -->
+                    </h4>
+                    <p id="feedback-rationale" class="text-gray-700 leading-relaxed mb-4">
+                        <!-- Rationale text will be injected here -->
+                    </p>
+                    <button id="next-button" onclick="nextQuestion()" class="w-full sm:w-auto px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white font-medium rounded-lg transition-colors focus:ring-4 focus:ring-gray-200">
+                        Tiếp theo
+                    </button>
+                </div>
+                
+                <!-- Final Result Section (Hidden initially) -->
+                <div id="result-section" class="hidden text-center py-12">
+                     <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-100 text-teal-600 rounded-full mb-6">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-4">Hoàn thành xuất sắc!</h3>
+                    <p class="text-lg text-gray-600 mb-8 max-w-md mx-auto">Bạn đã dành thời gian để thấu hiểu bản thân. Nhớ rằng, điều hòa cảm xúc là một hành trình luyện tập mỗi ngày.</p>
+                    <button onclick="restartQuiz()" class="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl transition-colors shadow-lg hover:shadow-xl">
+                        Thực hành lại
+                    </button>
+                </div>
             </div>
         </div>
+    </main>
 
-        <!-- Màn hình Kết quả -->
-        <div id="result-screen" class="hidden glass-card p-10 text-center animate-slide">
-            <h2 class="text-2xl font-bold text-slate-800 mb-2">Kết quả của bạn</h2>
-            <div class="text-6xl font-black text-indigo-600 my-6" id="final-score">0/10</div>
-            <p id="result-comment" class="text-slate-500 mb-10 text-lg leading-relaxed"></p>
-            <button onclick="location.reload()" class="w-full py-4 bg-slate-100 text-slate-700 font-bold rounded-2xl hover:bg-slate-200 transition-all">Thử lại</button>
-        </div>
-
-        <!-- Modal QR Code -->
-        <div id="qr-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div class="bg-white p-8 rounded-[2rem] max-w-sm w-full text-center shadow-2xl relative">
-                <button onclick="hideQRCode()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l18 18" /></svg>
-                </button>
-
-                <h3 class="font-bold text-xl mb-2">Chia sẻ cho đồng nghiệp</h3>
-                <p class="text-xs text-amber-600 bg-amber-50 p-2 rounded-lg mb-6 border border-amber-100">
-                    Lưu ý: Link "blob" hoặc "sandbox" chỉ mình bạn xem được. Hãy dán link web thật vào ô dưới.
-                </p>
-                
-                <!-- Ô nhập URL để test mã QR -->
-                <div class="mb-4">
-                    <input type="text" id="custom-url" placeholder="Dán link web của bạn vào đây..." class="w-full px-4 py-2 border rounded-xl text-xs focus:ring-2 focus:ring-indigo-400 outline-none">
-                    <button onclick="updateQR()" class="mt-2 text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Cập nhật mã QR</button>
+    <!-- HTML Source Modal -->
+    <div id="html-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden transform transition-all">
+            <div class="flex justify-between items-center p-4 border-b bg-gray-50">
+                <h3 class="text-lg font-bold text-gray-800">Mã nguồn HTML</h3>
+                <div class="flex space-x-2">
+                    <button onclick="copyHTMLToClipboard()" id="copy-btn" class="flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Sao chép Code</span>
+                    </button>
+                    <button onclick="toggleHTMLModal()" class="p-2 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
                 </div>
-
-                <div id="qrcode" class="flex justify-center mb-6 bg-slate-50 p-4 rounded-2xl min-h-[128px] items-center">
-                    <span class="text-xs text-slate-400">Đang tạo...</span>
+            </div>
+            <div class="flex-1 p-0 overflow-hidden bg-gray-900 relative">
+                <!-- Notification Toast for Copy -->
+                <div id="copy-toast" class="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg transform transition-all duration-300 translate-y-[-150%] opacity-0 z-10 flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Đã sao chép vào Clipboard!
                 </div>
-
-                <button id="copy-btn" onclick="copyToClipboard()" class="w-full py-3 bg-indigo-50 text-indigo-600 rounded-xl text-sm font-bold hover:bg-indigo-100 transition-all">
-                    Sao chép đường dẫn
-                </button>
+                <textarea id="html-code-area" readonly class="w-full h-full p-4 font-mono text-sm text-gray-300 bg-gray-900 border-none focus:ring-0 resize-none overflow-y-auto whitespace-pre"></textarea>
             </div>
         </div>
     </div>
 
+    <!-- Application Logic -->
     <script>
-        const questions = [
+        const quizData = [
             {
-                q: "Bạn vừa nhận được một email từ đồng nghiệp với lời lẽ khá 'gắt'. Phản ứng đầu tiên giúp bạn không hối hận là gì?",
+                question: "Trong một cuộc họp, sếp bất ngờ phê bình ý tưởng của bạn trước mặt toàn nhóm. Bạn cảm thấy nhịp tim tăng nhanh, mặt nóng bừng lên, hơi thở gấp gáp và có một thôi thúc muốn phản bác lại ngay lập tức. Dấu hiệu này giúp bạn xác định mình đang trải qua cảm xúc nào rõ rệt nhất?",
                 options: [
-                    "Viết ngay một email đáp trả còn 'gắt' hơn để dằn mặt.",
-                    "Đóng email lại, đi pha nước hoặc hít thở sâu rồi mới đọc kỹ lại.",
-                    "Chụp màn hình gửi ngay vào nhóm chat riêng để nói xấu.",
-                    "Trả lời ngay lập tức bằng lý lẽ đanh thép để bảo vệ bản thân."
-                ],
-                correct: 1,
-                hint: "Sự nóng nảy tức thời thường dẫn đến những lời lẽ khó rút lại. Một khoảng lặng ngắn giúp lý trí quay trở lại thay vì hành động theo bản năng 'chiến đấu'."
+                    { text: "Sự tức giận hoặc bức xúc.", rationale: "Tuyệt vời, bạn đã gọi tên rất chính xác. Nhịp tim nhanh, nhiệt độ cơ thể tăng và mong muốn phản kháng là những đặc trưng sinh lý và tâm lý cơ bản nhất của sự tức giận.", isCorrect: true },
+                    { text: "Sự lo âu, hoảng sợ.", rationale: "Sự căng thẳng của tình huống này rất dễ làm ta liên tưởng đến sự lo âu, đó là một suy đoán rất hợp lý. Tuy nhiên, xu hướng 'muốn phản bác lại' thường nghiêng về sự phòng vệ của tức giận nhiều hơn là lo âu (thường có xu hướng muốn thu mình hoặc trốn tránh).", isCorrect: false },
+                    { text: "Sự hụt hẫng, thất vọng.", rationale: "Bạn có một sự tinh tế khi nhìn ra được sự thất vọng ẩn sâu bên trong một lời phê bình. Nhưng ở ngay khoảnh khắc bùng phát với mặt nóng và tim đập nhanh, đó thường là biểu hiện bề mặt của một sự tức giận đang dâng cao.", isCorrect: false },
+                    { text: "Sự xấu hổ.", rationale: "Rất dễ hiểu khi bạn chọn đáp án này vì bị phê bình trước đám đông thường gợi lên sự xấu hổ. Tuy vậy, cảm giác 'muốn phản bác ngay lập tức' cùng nhịp tim mạnh cho thấy cơ thể đang huy động năng lượng để 'chiến đấu' (tức giận) thay vì 'rụt lại' (xấu hổ).", isCorrect: false }
+                ]
             },
             {
-                q: "Trong cuộc họp, sếp phê bình trực tiếp lỗi sai của bạn. Bạn nên tự nhủ điều gì để bình tĩnh?",
+                question: "Bạn đang tranh luận khá gay gắt với một đối tác. Bạn nhớ đến kỹ năng STOP và quyết định thực hành bước đầu tiên: S (Stop - Dừng lại). Hành động nào dưới đây thể hiện tốt nhất bước này?",
                 options: [
-                    "Sếp đang trù dập mình, chắc muốn mình nghỉ việc đây.",
-                    "Mọi người chắc đang cười nhạo mình lắm, nhục nhã quá.",
-                    "Đây là lời góp ý cho công việc, không phải tấn công cá nhân.",
-                    "Lần sau mình sẽ tìm cách đổ lỗi này cho người khác."
-                ],
-                correct: 2,
-                hint: "Đừng cá nhân hóa mọi lời chê. Tách biệt giữa 'kết quả công việc' và 'giá trị bản thân' giúp bạn đón nhận góp ý nhẹ nhàng hơn."
+                    { text: "Tạm ngưng việc nói lại, giữ im lặng một nhịp và không đưa ra thêm bất kỳ quyết định hay lời bình luận nào ngay khoảnh khắc đó.", rationale: "Hoàn toàn chính xác. Dừng lại đơn giản là tạo ra một khoảng lùi nhỏ, một không gian đệm để ngăn cơ thể và tâm trí phản ứng theo thói quen.", isCorrect: true },
+                    { text: "Xin lỗi đối tác, đứng dậy rời khỏi phòng ngay lập tức để tìm không gian yên tĩnh.", rationale: "Bảo vệ bản thân khỏi nguồn cơn căng thẳng là một phản ứng tự vệ rất tốt và đáng trân trọng. Dù vậy, bước 'Dừng lại' trong STOP thường được thực hành tinh tế ngay tại chỗ bằng cách ngưng hành động hiện tại một nhịp, thay vì phải rời đi ngay lập tức.", isCorrect: false },
+                    { text: "Yêu cầu đối tác ngừng nói ngay để bạn có thời gian suy nghĩ.", rationale: "Cách làm này cho thấy bạn đang rất chủ động muốn tạo ra không gian an toàn cho mình, điều đó rất dũng cảm. Tuy nhiên, 'Dừng lại' trong STOP hướng vào việc dừng chính những phản ứng bên trong mình trước, thay vì cố gắng thay đổi người đối diện.", isCorrect: false },
+                    { text: "Cố gắng gạt bỏ mọi suy nghĩ về công việc ra khỏi đầu để đầu óc trống rỗng.", rationale: "Mong muốn có một tâm trí bình yên lúc căng thẳng là nhu cầu rất chính đáng của con người. Tuy nhiên, việc cố gắng 'xóa sạch' suy nghĩ thường tạo thêm áp lực; chữ S chỉ đơn giản là tạm ngưng hành động bên ngoài.", isCorrect: false }
+                ]
             },
             {
-                q: "Deadline sát nút nhưng máy tính hỏng và đồng nghiệp làm phiền. Bạn nên làm gì?",
+                question: "Tiếp tục với kỹ năng STOP khi đối diện deadline gấp rút. Sau khi Dừng lại (S) và Hít thở (T - Take a breath), bạn bước vào giai đoạn O (Observe - Quan sát). Lựa chọn nào sau đây phản ánh đúng tinh thần của sự quan sát này?",
                 options: [
-                    "Quát vào mặt đồng nghiệp để họ im lặng.",
-                    "Cố làm tiếp trong bực bội.",
-                    "Đứng dậy đi rửa mặt, liệt kê 3 việc quan trọng nhất cần làm ngay.",
-                    "Buông xuôi, tắt máy đi về vì quá áp lực."
-                ],
-                correct: 2,
-                hint: "Khi não bộ quá tải, nó cần được 'reset'. Việc liệt kê giúp bạn lấy lại cảm giác kiểm soát và thoát khỏi trạng thái hoảng loạn."
+                    { text: "Tập trung đánh giá xem các đồng nghiệp khác có đang lười biếng và làm chậm tiến độ của mình hay không.", rationale: "Khi áp lực thời gian đè nặng, việc tìm kiếm nguyên nhân từ môi trường xung quanh là phản xạ tự nhiên của não bộ để giải quyết vấn đề. Nhưng bước O tuyệt vời nhất khi ta thu sự chú ý về hiện tại thay vì hướng ra ngoài.", isCorrect: false },
+                    { text: "Nhanh chóng liệt kê trong đầu những lỗi lầm mình đã mắc phải khiến công việc bị dồn ứ.", rationale: "Khả năng tự nhìn nhận lỗi sai cho thấy bạn là một người rất có trách nhiệm với công việc. Tuy nhiên, trong bước Quan sát, ta chỉ cần ghi nhận sự việc mà không đi kèm với việc tự phán xét hay đổ lỗi cho bản thân.", isCorrect: false },
+                    { text: "Nhận diện xem cơ thể mình đang gồng cứng ở đâu, tâm trí đang lo lắng điều gì, ghi nhận chúng như nó đang là mà không phán xét.", rationale: "Rất tinh tế. Bạn đã nắm bắt được cốt lõi của sự quan sát. Việc nhận diện rõ ràng trạng thái thân - tâm mà không dán nhãn 'tốt' hay 'xấu' giúp tháo gỡ sự kháng cự bên trong.", isCorrect: true },
+                    { text: "Nhìn đồng hồ liên tục để ước lượng xem mình còn lại bao nhiêu thời gian.", rationale: "Sự bận tâm về thời gian là một biểu hiện rất dễ hiểu của sự lo âu khi có deadline. Dù vậy, Quan sát (Observe) trong STOP khuyến khích ta hướng sự chú ý một cách toàn diện vào bên trong thân thể và tâm trí hiện tại hơn là chỉ tập trung vào ngoại cảnh.", isCorrect: false }
+                ]
             },
             {
-                q: "Đồng nghiệp thân thiết đang buồn và uể oải. Cách hỏi thăm nào khéo léo nhất?",
+                question: "SBNRR là một chuỗi thực hành sâu sắc hơn để đối diện với những tình huống khó khăn, chẳng hạn như nhận một email phàn nàn đầy định kiến. Bạn có nhớ SBNRR là viết tắt của những từ khóa nào theo thứ tự không?",
                 options: [
-                    "Sao mặt mày như đưa đám thế? Có chuyện gì kể nghe!",
-                    "Tớ thấy hôm nay cậu hơi mệt, nếu cần người nghe thì bảo tớ nhé.",
-                    "Làm việc đi, buồn phiền thì để hết giờ rồi tính.",
-                    "Đi kể với người khác là bạn đó đang có chuyện buồn."
-                ],
-                correct: 1,
-                hint: "Sự thấu cảm cần sự tế nhị. Cho họ biết bạn sẵn sàng lắng nghe nhưng không ép buộc họ phải chia sẻ ngay lập tức."
+                    { text: "Dừng lại (Stop), Hít thở (Breathe), Ghi nhận (Notice), Suy ngẫm (Reflect), Phản hồi (Respond).", rationale: "Chính xác! Chuỗi này tạo ra một vòng cung hoàn hảo từ việc giảm tốc độ, kết nối với cơ thể, quan sát tâm trí, mở rộng góc nhìn và cuối cùng là hành động một cách có ý thức.", isCorrect: true },
+                    { text: "Dừng lại (Stop), Hít thở (Breathe), Ghi chú (Note), Đọc lại (Read), Phản hồi (Respond).", rationale: "Đây cũng là một quy trình xử lý công việc rất logic và chuyên nghiệp. Tuy nhiên, trong khung thực hành chánh niệm SBNRR, chữ N và R đầu tiên thiên về sự kết nối nội tâm nhiều hơn là các thao tác lý trí.", isCorrect: false },
+                    { text: "Dừng lại (Stop), Cân bằng (Balance), Nuôi dưỡng (Nurture), Nghỉ ngơi (Rest), Phục hồi (Recover).", rationale: "Những từ khóa bạn chọn mang năng lượng chữa lành rất tuyệt vời, rất cần thiết sau những giờ làm việc căng thẳng. Khung SBNRR thực tế lại tập trung vào cách xử lý trực tiếp một kích thích cảm xúc ngay tại thời điểm nó xảy ra.", isCorrect: false },
+                    { text: "Bắt đầu (Start), Hít thở (Breathe), Ghi nhận (Notice), Ghi nhớ (Remember), Lặp lại (Repeat).", rationale: "Cách diễn đạt này giống như một quy trình xây dựng thói quen tích cực mới, một góc nhìn rất thú vị. Nhưng SBNRR bắt đầu bằng sự 'Dừng lại' để ngắt một thói quen phản ứng cũ.", isCorrect: false }
+                ]
             },
             {
-                q: "Trước khi bước vào một cuộc đối thoại khó khăn, bạn nên làm gì?",
+                question: "Trong quy trình SBNRR, bước 'Suy ngẫm' (R - Reflect) đóng vai trò gì khi bạn phát hiện một đồng nghiệp đang hiểu lầm ý tốt của mình trong dự án chung?",
                 options: [
-                    "Để đến lúc đó xem cảm xúc thế nào rồi nói đại.",
-                    "Tập dượt trước các tình huống xấu nhất và cách trả lời bình tĩnh.",
-                    "Uống một chút bia/rượu để lấy can đảm.",
-                    "Nhờ người khác nói hộ để không phải đối mặt."
-                ],
-                correct: 1,
-                hint: "Chuẩn bị tâm lý giúp bạn không bị bất ngờ trước các phản ứng tiêu cực. Nó giúp bạn giữ được mục tiêu của cuộc trò chuyện."
+                    { text: "Cho phép bản thân chìm đắm vào cảm giác tủi thân để trọn vẹn với sự tổn thương của mình.", rationale: "Thừa nhận sự tổn thương và cho phép mình buồn là một hành động rất dũng cảm và yêu thương bản thân. Bước Suy ngẫm sau đó sẽ giúp bạn lấy lại sự vững chãi để không bị cuốn trôi hoàn toàn vào cảm xúc đó.", isCorrect: false },
+                    { text: "Suy nghĩ để tìm ra những lý lẽ sắc bén nhất nhằm chứng minh rằng đồng nghiệp đó đã sai.", rationale: "Mong muốn minh oan và bảo vệ lẽ phải là nhu cầu hoàn toàn tự nhiên để bảo vệ giá trị của bản thân. Dù vậy, bước Reflect trong SBNRR nhằm hướng tới sự thấu cảm và bức tranh lớn hơn là việc thắng - thua trong tranh luận.", isCorrect: false },
+                    { text: "Tự hỏi xem có điều gì ẩn sau phản ứng của đồng nghiệp không, điều gì thực sự quan trọng với dự án lúc này, từ đó chọn góc nhìn rộng lớn hơn.", rationale: "Tuyệt vời. Đây chính là không gian của sự minh triết. Khi bạn bước lùi lại và suy ngẫm rộng hơn, bạn chuyển hóa từ một nạn nhân của hoàn cảnh thành người chủ động kiến tạo giải pháp.", isCorrect: true },
+                    { text: "Lục tìm lại ký ức xem người đồng nghiệp này có từng hiểu lầm ai khác trong quá khứ không để củng cố lập luận của mình.", rationale: "Não bộ chúng ta rất giỏi trong việc tìm kiếm dữ liệu để tự bảo vệ mình, đó là bản năng sinh tồn. Tuy nhiên, bước Suy ngẫm trong SBNRR khuyến khích ta ở lại với thực tại của vấn đề hiện tại thay vì đào xới quá khứ.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Bạn vừa nhận được email thông báo không được chọn cho đợt thăng chức lần này. Bạn cảm thấy lồng ngực nặng trĩu, năng lượng cạn kiệt, không muốn giao tiếp và trong đầu lặp đi lặp lại suy nghĩ 'Mình chưa đủ giỏi'. Việc xác định cảm xúc lúc này là gì?",
+                options: [
+                    { text: "Sự kiệt sức nghề nghiệp (Burnout).", rationale: "Rất có thể sự kiện này là một giọt nước tràn ly nếu bạn đã làm việc quá sức trong thời gian dài, suy luận này của bạn rất có chiều sâu. Nhưng ở khoảnh khắc cụ thể vừa nhận tin buồn, trạng thái này phản ánh một cảm xúc tức thời rõ rệt hơn.", isCorrect: false },
+                    { text: "Sự buồn bã, hụt hẫng và tổn thương.", rationale: "Bạn đã dũng cảm gọi tên đúng sự mong manh này. Việc đối diện với sự từ chối mang lại nỗi buồn sâu sắc. Ghi nhận sự buồn bã là bước đầu tiên để ôm ấp và chữa lành nó.", isCorrect: true },
+                    { text: "Sự ghen tị với người được thăng chức.", rationale: "Sự ghen tị là một cảm xúc rất con người và hoàn toàn có thể xuất hiện sau đó. Nhưng những biểu hiện như nặng ngực, thu mình lại và tự trách bản thân đang tập trung vào nỗi đau của chính bạn nhiều hơn là hướng sự chú ý sang người khác.", isCorrect: false },
+                    { text: "Sự tức giận ngầm đối với công ty.", rationale: "Khi bị từ chối, sự ấm ức và tức giận công ty là phản ứng hoàn toàn bình thường để bảo vệ lòng tự trọng. Dù vậy, những biểu hiện giảm năng lượng và tự trách ('mình chưa đủ giỏi') thường nghiêng về phía sự buồn bã và tổn thương nhiều hơn.", isCorrect: false }
+                ]
+            },
+            {
+                question: "Một người đồng nghiệp liên tục ngắt lời khi bạn đang trình bày ý tưởng tâm huyết. Bạn nhận diện được mình đang rất bực bội. Áp dụng kỹ năng STOP hoặc SBNRR, hành động nào sau đây thể hiện tốt nhất bước cuối cùng: Phản hồi/Tiếp tục (Respond/Proceed)?",
+                options: [
+                    { text: "Im lặng từ đó đến cuối buổi họp vì cảm thấy có nói ra cũng không được tôn trọng.", rationale: "Việc lựa chọn im lặng cho thấy bạn đang bảo vệ năng lượng của bản thân khỏi một môi trường kém thân thiện, đó là một cơ chế phòng vệ có thể hiểu được. Tuy nhiên, một sự 'Phản hồi' có chánh niệm sẽ giúp bạn vừa bảo vệ mình, vừa tiếp tục đóng góp giá trị mà không cần phải thu mình lại.", isCorrect: false },
+                    { text: "Đợi người đó dừng một nhịp, hít một hơi sâu và nói với giọng điềm tĩnh: 'Tôi hiểu ý bạn, xin phép cho tôi được chia sẻ nốt ý tưởng của mình nhé'.", rationale: "Thật xuất sắc! Đây là minh chứng rõ ràng cho sức mạnh của sự điềm tĩnh. Bạn không hề bỏ qua cảm xúc của mình, cũng không tấn công người khác, bạn chỉ đơn giản là thiết lập ranh giới một cách đầy tôn trọng.", isCorrect: true },
+                    { text: "Ngay lập tức ngắt lời lại người đó với âm lượng to hơn để giành lại quyền kiểm soát cuộc trò chuyện.", rationale: "Hành động này bộc lộ sự tự tin và mong muốn khẳng định vị thế của bạn, điều này đôi khi rất cần thiết. Tuy vậy, theo hướng tiếp cận của SBNRR, việc đấu tranh bằng sức mạnh âm lượng thường là 'phản xạ' (React) của sự bực tức hơn là một 'phản hồi' (Respond) sáng suốt.", isCorrect: false },
+                    { text: "Ngừng cuộc họp và yêu cầu người quản lý phải chấn chỉnh lại thái độ của đồng nghiệp kia ngay lập tức.", rationale: "Bạn có ý thức rất rõ ràng về sự công bằng và tính kỷ luật trong môi trường làm việc, điều đó rất đáng quý. Nhưng việc đẩy trách nhiệm giải quyết cảm xúc hiện tại cho người thứ ba đôi khi làm mất đi cơ hội thực hành năng lực tự chủ của chính bạn ngay lúc đó.", isCorrect: false }
+                ]
             }
         ];
 
-        let currentQuestion = 0;
-        let score = 0;
+        let currentQuestionIndex = 0;
         let isAnswered = false;
-        let qrGenerator = null;
 
-        function startQuiz() {
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.remove('hidden');
-            showQuestion();
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const feedbackSectionEl = document.getElementById('feedback-section');
+        const feedbackTitleEl = document.getElementById('feedback-title');
+        const feedbackRationaleEl = document.getElementById('feedback-rationale');
+        const questionCounterEl = document.getElementById('question-counter');
+        const progressBarEl = document.getElementById('progressBar'); // Fixed ID
+        const questionSectionEl = document.getElementById('question-section');
+        const resultSectionEl = document.getElementById('result-section');
+
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            questionSectionEl.classList.remove('hidden');
+            resultSectionEl.classList.add('hidden');
+            loadQuestion();
         }
 
-        function showQuestion() {
+        function loadQuestion() {
             isAnswered = false;
-            const qData = questions[currentQuestion];
-            document.getElementById('progress-text').innerText = `Câu ${currentQuestion + 1} / ${questions.length}`;
-            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-            document.getElementById('question-text').innerText = qData.q;
+            const currentQ = quizData[currentQuestionIndex];
             
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            
-            qData.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.className = "answer-btn w-full p-4 text-left rounded-2xl font-medium text-slate-700 bg-white animate-slide";
-                btn.style.animationDelay = `${index * 0.1}s`;
-                btn.innerText = opt;
-                btn.onclick = () => checkAnswer(index, btn);
-                optionsContainer.appendChild(btn);
-            });
+            // Update Progress
+            questionCounterEl.textContent = `Câu ${currentQuestionIndex + 1} / ${quizData.length}`;
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
 
-            document.getElementById('feedback-panel').classList.add('hidden');
+            // Set Question Text
+            questionTextEl.textContent = currentQ.question;
+            
+            // Clear previous options and feedback
+            optionsContainerEl.innerHTML = '';
+            feedbackSectionEl.classList.add('hidden');
+
+            // Render Options
+            currentQ.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-4 rounded-xl border border-gray-200 hover:border-teal-500 hover:bg-teal-50 transition-all duration-200 focus:outline-none flex items-start group';
+                
+                // Add letter (A, B, C, D)
+                const letter = String.fromCharCode(65 + index);
+                
+                button.innerHTML = `
+                    <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 font-semibold mr-4 group-hover:bg-teal-100 group-hover:text-teal-700 transition-colors">${letter}</span>
+                    <span class="text-gray-700 font-medium pt-1">${option.text}</span>
+                `;
+                
+                button.onclick = () => selectOption(index, button, option);
+                optionsContainerEl.appendChild(button);
+            });
+            
+            // Small animation
+            questionSectionEl.style.opacity = 0;
+            setTimeout(() => { questionSectionEl.style.opacity = 1; }, 50);
         }
 
-        function checkAnswer(index, btn) {
-            if (isAnswered) return;
+        function selectOption(selectedIndex, buttonEl, optionData) {
+            if (isAnswered) return; // Prevent multiple selections
             isAnswered = true;
 
-            const qData = questions[currentQuestion];
-            const feedbackPanel = document.getElementById('feedback-panel');
-            const feedbackMsg = document.getElementById('feedback-message');
-            const feedbackHint = document.getElementById('feedback-hint');
-            const feedbackIcon = document.getElementById('feedback-icon');
+            const buttons = optionsContainerEl.querySelectorAll('button');
             
-            feedbackPanel.classList.remove('hidden');
-            
-            if (index === qData.correct) {
-                score++;
-                btn.className = "answer-btn w-full p-4 text-left border-2 border-green-500 bg-green-50 rounded-2xl font-bold text-green-700";
-                feedbackPanel.classList.add('border-green-500', 'bg-green-50');
-                feedbackPanel.classList.remove('border-amber-400', 'bg-amber-50');
-                feedbackMsg.innerText = "Chính xác! 👏";
-                feedbackIcon.innerHTML = '✅';
-                feedbackHint.innerText = qData.hint;
-            } else {
-                btn.className = "answer-btn w-full p-4 text-left border-2 border-red-400 bg-red-50 rounded-2xl font-bold text-red-700";
-                feedbackPanel.classList.add('border-amber-400', 'bg-amber-50');
-                feedbackPanel.classList.remove('border-green-500', 'bg-green-50');
-                feedbackMsg.innerText = "Chưa đúng lắm... 🤔";
-                feedbackIcon.innerHTML = '💡';
-                feedbackHint.innerHTML = `<span class="font-bold">Gợi ý:</span> ${qData.hint}`;
-            }
+            // Disable all buttons and style them based on correctness
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:border-teal-500', 'hover:bg-teal-50', 'cursor-pointer');
+                
+                const optionInfo = quizData[currentQuestionIndex].options[idx];
+                const letterSpan = btn.querySelector('span:first-child');
+                
+                if (idx === selectedIndex) {
+                    if (optionInfo.isCorrect) {
+                        btn.classList.add('bg-green-50', 'border-green-500', 'ring-2', 'ring-green-200');
+                        letterSpan.classList.add('bg-green-500', 'text-white');
+                        letterSpan.classList.remove('bg-gray-100', 'text-gray-600');
+                    } else {
+                        btn.classList.add('bg-blue-50', 'border-blue-400'); // Changed from Red to Blue for supportive feedback
+                        letterSpan.classList.add('bg-blue-500', 'text-white');
+                        letterSpan.classList.remove('bg-gray-100', 'text-gray-600');
+                    }
+                } else if (optionInfo.isCorrect) {
+                    // Highlight the correct answer even if not selected
+                    btn.classList.add('border-green-300', 'opacity-70');
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
 
-            const btns = document.querySelectorAll('.answer-btn');
-            btns.forEach(b => b.disabled = true);
+            showFeedback(optionData);
+        }
+
+        function showFeedback(optionData) {
+            feedbackSectionEl.classList.remove('hidden');
+            
+            if (optionData.isCorrect) {
+                feedbackSectionEl.className = 'mt-8 p-6 rounded-xl border-l-4 border-green-500 bg-green-50 animate-fade-in-up';
+                feedbackTitleEl.className = 'text-lg font-bold text-green-800 mb-2 flex items-center';
+                feedbackTitleEl.innerHTML = `<svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Tuyệt vời!`;
+            } else {
+                 // Supportive feedback style for incorrect answers
+                feedbackSectionEl.className = 'mt-8 p-6 rounded-xl border-l-4 border-blue-400 bg-blue-50 animate-fade-in-up';
+                feedbackTitleEl.className = 'text-lg font-bold text-blue-800 mb-2 flex items-center';
+                feedbackTitleEl.innerHTML = `<svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Góc nhìn thú vị`;
+            }
+            
+            feedbackRationaleEl.textContent = optionData.rationale;
+            
+            // Update button text on last question
+            const nextBtn = document.getElementById('next-button');
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.textContent = 'Hoàn thành';
+            } else {
+                nextBtn.textContent = 'Tiếp theo';
+            }
+            
+            // Scroll to feedback
+            setTimeout(() => {
+                feedbackSectionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
         }
 
         function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                showQuestion();
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
             } else {
                 showResult();
             }
         }
 
         function showResult() {
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
-            
-            let comment = "";
-            if (score === questions.length) comment = "Tuyệt vời! Bạn là bậc thầy kiềm chế cảm xúc. Đồng nghiệp chắc chắn rất nể trọng bạn.";
-            else if (score >= 3) comment = "Bạn có EQ khá tốt. Chỉ cần rèn luyện thêm một chút ở các tình huống áp lực cao là hoàn hảo.";
-            else comment = "Không sao cả, ai cũng có lúc nóng nảy. Hãy coi đây là dịp để nhìn lại và thay đổi cách phản ứng nhé!";
-            
-            document.getElementById('result-comment').innerText = comment;
+            questionSectionEl.classList.add('hidden');
+            resultSectionEl.classList.remove('hidden');
+            document.getElementById('progress-bar').style.width = `100%`;
         }
 
-        function showQRCode() {
-            const modal = document.getElementById('qr-modal');
-            const qrContainer = document.getElementById('qrcode');
-            const urlInput = document.getElementById('custom-url');
-            
-            qrContainer.innerHTML = '';
-            modal.classList.remove('hidden');
-            
-            // Lấy URL thực tế
-            let currentUrl = window.location.href;
-            urlInput.value = currentUrl;
-            
-            createQR(currentUrl);
+        function restartQuiz() {
+            initQuiz();
         }
 
-        function updateQR() {
-            const url = document.getElementById('custom-url').value;
-            if (url) {
-                document.getElementById('qrcode').innerHTML = '';
-                createQR(url);
+        // --- Modal and Copy HTML Logic ---
+        
+        function toggleHTMLModal() {
+            const modal = document.getElementById('html-modal');
+            const textArea = document.getElementById('html-code-area');
+            
+            if (modal.classList.contains('hidden')) {
+                // Show modal
+                modal.classList.remove('hidden');
+                // Format and set the HTML content of the CURRENT file to the textarea
+                // We fetch the current document's outerHTML
+                let rawHTML = document.documentElement.outerHTML;
+                
+                // Optional: Basic formatting (replace some minified structures with newlines)
+                // In a real app, you might use a library like js-beautify here
+                
+                textArea.value = '<!DOCTYPE html>\n<html lang="vi">\n' + document.documentElement.innerHTML + '\n</html>';
+                
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Hide modal
+                modal.classList.add('hidden');
+                // Restore body scroll
+                document.body.style.overflow = 'auto';
             }
         }
 
-        function createQR(url) {
+        function copyHTMLToClipboard() {
+            const textArea = document.getElementById('html-code-area');
+            
+            // Select the text
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); // For mobile devices
+            
             try {
-                qrGenerator = new QRCode(document.getElementById('qrcode'), {
-                    text: url,
-                    width: 160,
-                    height: 160,
-                    colorDark : "#1e1b4b",
-                    colorLight : "#ffffff",
-                    correctLevel : QRCode.CorrectLevel.H
-                });
-            } catch (e) {
-                document.getElementById('qrcode').innerText = "Lỗi tạo mã QR. Vui lòng kiểm tra link.";
+                // Execute copy
+                document.execCommand('copy');
+                
+                // Show Toast Notification
+                const toast = document.getElementById('copy-toast');
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                // Update Button Visuals
+                const btn = document.getElementById('copy-btn');
+                const originalContent = btn.innerHTML;
+                btn.classList.replace('bg-blue-600', 'bg-green-600');
+                btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
+                btn.innerHTML = `<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Đã Copy!</span>`;
+                
+                // Hide Toast and reset button after 2.5 seconds
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-150%)';
+                    
+                    btn.classList.replace('bg-green-600', 'bg-blue-600');
+                    btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+                    btn.innerHTML = originalContent;
+                }, 2500);
+                
+            } catch (err) {
+                console.error('Không thể sao chép văn bản: ', err);
+                alert('Có lỗi xảy ra khi copy. Vui lòng chọn text thủ công.');
             }
-        }
-
-        function copyToClipboard() {
-            const url = document.getElementById('custom-url').value;
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = url;
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
             
-            const btn = document.getElementById('copy-btn');
-            btn.innerText = "Đã sao chép vào bộ nhớ tạm!";
-            btn.classList.replace('text-indigo-600', 'text-green-600');
-            setTimeout(() => {
-                btn.innerText = "Sao chép đường dẫn";
-                btn.classList.replace('text-green-600', 'text-indigo-600');
-            }, 2000);
+            // Deselect
+            window.getSelection().removeAllRanges();
         }
 
-        function hideQRCode() {
-            document.getElementById('qr-modal').classList.add('hidden');
-        }
+        // Add custom animation styles dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up {
+                animation: fadeInUp 0.4s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Start Quiz on load
+        window.onload = initQuiz;
+
     </script>
 </body>
 </html>
