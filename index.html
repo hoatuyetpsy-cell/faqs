@@ -34,9 +34,12 @@
         <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col h-full max-h-[800px]">
             
             <!-- Quiz Header -->
-            <div class="bg-teal-50 p-6 sm:p-8 border-b border-teal-100">
-                <h2 class="text-2xl sm:text-3xl font-bold text-teal-800 mb-2">Bài tập: Kỹ Năng Làm Chủ Cảm Xúc</h2>
-                <p class="text-teal-600">Thực hành thấu hiểu nội tâm với kỹ năng STOP và SBNRR.</p>
+            <div class="bg-teal-50 p-6 sm:p-8 border-b border-teal-100 flex justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-teal-800 mb-2">Bài tập: Kỹ Năng Làm Chủ Cảm Xúc</h2>
+                    <p class="text-teal-600">Thực hành thấu hiểu nội tâm với kỹ năng STOP và SBNRR.</p>
+                </div>
+                <img src="https://hoatuyetpsy-cell.github.io/faqs/avatar-sm.png" alt="Giáo viên" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-teal-200 shadow-sm object-cover flex-shrink-0">
             </div>
 
             <!-- Quiz Content Container -->
@@ -60,8 +63,18 @@
                         <!-- Options will be injected here -->
                     </div>
 
+                    <!-- Feedback Section (Hidden initially) -->
+                    <div id="feedback-section" class="hidden mt-8 p-6 rounded-xl border-l-4 transition-all duration-300">
+                        <h4 id="feedback-title" class="text-lg font-bold mb-2 flex items-center">
+                            <!-- Feedback icon and title will be injected here -->
+                        </h4>
+                        <p id="feedback-rationale" class="text-gray-700 leading-relaxed mb-4">
+                            <!-- Rationale text will be injected here -->
+                        </p>
+                    </div>
+
                     <!-- Navigation Buttons -->
-                    <div class="flex justify-between items-center mt-8">
+                    <div class="flex justify-between items-center mt-8 pb-4" id="navigation-section">
                         <button id="prev-button" onclick="prevQuestion()" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors focus:ring-4 focus:ring-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
                             Câu trước
                         </button>
@@ -189,6 +202,15 @@
         }
 
         function loadQuestion() {
+            // Tự động cuộn lên đầu khung trắc nghiệm khi tải câu hỏi mới
+            const quizContainer = document.getElementById('quiz-container');
+            if (quizContainer) {
+                quizContainer.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+
             // Check if current question was already answered
             isAnswered = userAnswers[currentQuestionIndex] !== null;
             const currentQ = quizData[currentQuestionIndex];
@@ -298,12 +320,14 @@
             
             feedbackRationaleEl.textContent = optionData.rationale;
             
-            // Scroll to feedback (only if newly answered)
-            if (userAnswers[currentQuestionIndex] === selectedIndex) {
-                 setTimeout(() => {
-                    feedbackSectionEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 100);
-            }
+            // Scroll to the bottom of the container to show navigation buttons
+            setTimeout(() => {
+                const quizContainer = document.getElementById('quiz-container');
+                quizContainer.scrollTo({
+                    top: quizContainer.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
 
         function prevQuestion() {
